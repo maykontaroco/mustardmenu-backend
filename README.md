@@ -1,4 +1,2 @@
-# mustardmenu-backend
-<p> Project created to final pro</p>
-
+# MustardMenu - BackEnd
 <p> Project created for Post Graduation in Software Engineering at PUC-Minas </p>
