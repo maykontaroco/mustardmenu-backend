@@ -22,9 +22,9 @@ public class LoginController {
 
         // Verificar se o usuário e a senha são válidos
         if (loginService.validarLogin(username, password)) {
-            return ResponseEntity.status(HttpStatus.OK).body("login autorizado");
+            return ResponseEntity.status(HttpStatus.OK).build();
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("login não autorizado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
