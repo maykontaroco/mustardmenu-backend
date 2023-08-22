@@ -30,4 +30,14 @@ public class OrderItemService {
         orderItem.cancel();
         save(orderItem);
     }
+
+    public OrderItem addQuantity(OrderItem orderItem) {
+        orderItem.addQuantity();
+        return save(orderItem);
+    }
+
+    public OrderItem removeQuantity(OrderItem orderItem) {
+        orderItem.removeQuantity();
+        return save(orderItem);
+    }
 }

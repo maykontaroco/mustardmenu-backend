@@ -30,8 +30,14 @@ public class OrderService {
         Order order = new Order(1L, 1L);
         return save(order);
     }
+
     public void cancel(Order order) {
         order.cancel();
+        save(order);
+    }
+
+    public void refreshTotal(Order order) {
+        order.refreshTotal();
         save(order);
     }
 }
