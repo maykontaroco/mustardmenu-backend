@@ -1,7 +1,10 @@
 package br.com.taroco.mustardmenu.domain.model.order;
 
 import br.com.taroco.mustardmenu.domain.enumerator.OrderStatusEnum;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -46,11 +49,13 @@ public class Order {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount = BigDecimal.ZERO;
 
-    @Column(name = "addition")
-    private BigDecimal addition;
+    @Column(name = "addition", nullable = false)
+    private BigDecimal addition = BigDecimal.ZERO;
+    ;
 
-    @Column(name = "discount")
-    private BigDecimal discount;
+    @Column(name = "discount", nullable = false)
+    private BigDecimal discount = BigDecimal.ZERO;
+    ;
 
     @Column(name = "observation")
     private String observation;
@@ -68,6 +73,15 @@ public class Order {
     public Order(Long idCashier, Long idUser) {
         this.idCashier = idCashier;
         this.idUser = idUser;
+    }
+
+    public void refreshTotal() {
+        this.amount = BigDecimal.ZERO;
+        for (OrderItem item : this.items) {
+            if (!item.isCanceled())
+                this.amount = amount.add(item.getTotalValue());
+        }
+        this.amount = this.amount.add(addition).subtract(this.discount);
     }
 
     public void cancel() {
