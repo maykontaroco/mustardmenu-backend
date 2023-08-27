@@ -47,6 +47,9 @@ public class OrderItem {
     @Column(name = "cost_value")
     private BigDecimal costValue;
 
+    @Column(name = "description")
+    private String description;
+
     public OrderItem(Long idOrder, Long idProduct, BigDecimal unitValue) {
         this.idOrder = idOrder;
         this.idProduct = idProduct;

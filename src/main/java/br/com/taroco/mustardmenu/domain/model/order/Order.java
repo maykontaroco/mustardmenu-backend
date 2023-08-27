@@ -51,14 +51,13 @@ public class Order {
 
     @Column(name = "addition", nullable = false)
     private BigDecimal addition = BigDecimal.ZERO;
-    ;
 
     @Column(name = "discount", nullable = false)
     private BigDecimal discount = BigDecimal.ZERO;
-    ;
 
     @Column(name = "observation")
     private String observation;
+
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
