@@ -1,6 +1,7 @@
 package br.com.taroco.mustardmenu.domain.enumerator;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.util.Arrays;
 
@@ -23,6 +24,15 @@ public enum PaymentTypeEnum {
         return Arrays.stream(PaymentTypeEnum.values()).filter(p -> p.code.equals(code)).findFirst().orElse(null);
     }
 
+    @JsonCreator
+    public static PaymentTypeEnum fromString(String value) {
+        for (PaymentTypeEnum type : PaymentTypeEnum.values()) {
+            if (type.name().equals(value)) {
+                return type;
+            }
+        }
+        return null;
+    }
     @JsonValue
     public String getDescription() {
         return description;

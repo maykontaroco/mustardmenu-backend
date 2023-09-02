@@ -1,5 +1,6 @@
 package br.com.taroco.mustardmenu.domain.enumerator;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OrderStatusEnum {
@@ -11,6 +12,16 @@ public enum OrderStatusEnum {
 
     OrderStatusEnum(String description) {
         this.description = description;
+    }
+
+    @JsonCreator
+    public static OrderStatusEnum fromString(String value) {
+        for (OrderStatusEnum status : OrderStatusEnum.values()) {
+            if (status.name().equals(value)) {
+                return status;
+            }
+        }
+        return null;
     }
 
     @JsonValue
