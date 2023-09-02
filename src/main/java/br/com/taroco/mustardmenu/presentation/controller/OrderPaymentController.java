@@ -1,7 +1,10 @@
 package br.com.taroco.mustardmenu.presentation.controller;
 
+import br.com.taroco.mustardmenu.domain.exception.InvalidPaymentException;
+import br.com.taroco.mustardmenu.domain.model.order.Order;
 import br.com.taroco.mustardmenu.domain.model.order.OrderPayment;
 import br.com.taroco.mustardmenu.domain.service.OrderPaymentService;
+import br.com.taroco.mustardmenu.domain.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,9 @@ public class OrderPaymentController {
     @Autowired
     private OrderPaymentService orderPaymentService;
 
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping
     public ResponseEntity<List<OrderPayment>> getPayments() {
         List<OrderPayment> payments = orderPaymentService.getAll();
@@ -30,6 +36,19 @@ public class OrderPaymentController {
 
     @PostMapping
     public ResponseEntity<OrderPayment> create(@RequestBody OrderPayment orderPayment) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderPaymentService.save(orderPayment));
+        Order order = orderService.findById(orderPayment.getIdOrder());
+
+        //Valid payment
+        if (!order.paymentIsValid(orderPayment.getValue()))
+            throw new InvalidPaymentException();
+
+        //Insert payment
+        ResponseEntity<OrderPayment> response = ResponseEntity.status(HttpStatus.CREATED).body(orderPaymentService.save(orderPayment));
+
+        //Valid order paid
+        if (order.orderIsPaid())
+            orderService.finalize(order);
+
+        return response;
     }
 }

@@ -5,6 +5,7 @@ import br.com.taroco.mustardmenu.infrastructure.persistence.OrderPaymentReposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequiredArgsConstructor

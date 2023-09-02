@@ -87,20 +87,25 @@ public class Order {
         status = OrderStatusEnum.CANCELED;
     }
 
-    public void addItem(OrderItem item) {
-        items.add(item);
+    public void conclude() {
+        status = OrderStatusEnum.FINISHED;
     }
 
-    public void removeItem(OrderItem item) {
-        items.remove(item);
+    public BigDecimal totalPayments() {
+        BigDecimal totalPaid = BigDecimal.ZERO;
+        for (OrderPayment payment : this.getPayments()) {
+            totalPaid = totalPaid.add(payment.getValue());
+        }
+        return totalPaid;
     }
 
-    public void addPayment(OrderPayment payment) {
-        payments.add(payment);
+    public boolean orderIsPaid() {
+        return this.getAmount().compareTo(this.totalPayments()) == 0;
     }
 
-    public void removePayment(OrderPayment payment) {
-        payments.remove(payment);
+    public boolean paymentIsValid(BigDecimal value) {
+        BigDecimal totalPayments = this.totalPayments().add(value);
+        return this.getAmount().compareTo(totalPayments) >= 0;
     }
 
 }

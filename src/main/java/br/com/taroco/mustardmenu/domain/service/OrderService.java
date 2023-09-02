@@ -1,10 +1,12 @@
 package br.com.taroco.mustardmenu.domain.service;
 
 import br.com.taroco.mustardmenu.domain.model.order.Order;
+import br.com.taroco.mustardmenu.domain.model.order.OrderPayment;
 import br.com.taroco.mustardmenu.infrastructure.persistence.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,6 +35,11 @@ public class OrderService {
 
     public void cancel(Order order) {
         order.cancel();
+        save(order);
+    }
+
+    public void finalize(Order order) {
+        order.conclude();
         save(order);
     }
 
