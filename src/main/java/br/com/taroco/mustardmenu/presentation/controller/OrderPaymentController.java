@@ -46,6 +46,7 @@ public class OrderPaymentController {
         ResponseEntity<OrderPayment> response = ResponseEntity.status(HttpStatus.CREATED).body(orderPaymentService.save(orderPayment));
 
         //Valid order paid
+        order.getPayments().add(orderPayment);
         if (order.orderIsPaid())
             orderService.finalize(order);
 

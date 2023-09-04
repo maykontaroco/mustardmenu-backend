@@ -75,7 +75,7 @@ public class DashboardService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal totalOrders = new BigDecimal(orders.size());
-        BigDecimal value = valueOrders.divide(totalOrders, RoundingMode.HALF_EVEN);
+        BigDecimal value = orders.size() > 0 ? valueOrders.divide(totalOrders, RoundingMode.HALF_EVEN) : BigDecimal.ZERO;
 
         return new Dashboard(DashboardType.MONEY, "Ticket médio", value);
     }
