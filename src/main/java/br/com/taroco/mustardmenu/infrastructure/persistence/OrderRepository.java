@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("SELECT o FROM Order o WHERE o.date >= :startOfDay AND o.date <= :endOfDay")
+    @Query("SELECT o FROM Order o WHERE o.date >= :startOfDay AND o.date <= :endOfDay AND o.status = 'FINISHED'")
     List<Order> findByDateBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 }
