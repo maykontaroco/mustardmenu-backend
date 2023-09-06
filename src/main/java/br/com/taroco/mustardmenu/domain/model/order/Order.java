@@ -87,6 +87,16 @@ public class Order {
         status = OrderStatusEnum.CANCELED;
     }
 
+    public void addition(BigDecimal value) {
+        this.addition = value;
+        refreshTotal();
+    }
+
+    public void discount(BigDecimal value) {
+        this.discount = value;
+        refreshTotal();
+    }
+
     public void conclude() {
         status = OrderStatusEnum.FINISHED;
     }

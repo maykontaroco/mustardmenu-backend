@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -48,5 +49,24 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @PutMapping("/{id}/addition")
+    public ResponseEntity<Void> addition(@PathVariable Long id, @RequestBody BigDecimal value) {
+        Order order = orderService.findById(id);
+        if (order != null) {
+            orderService.addition(order, value);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PutMapping("/{id}/discount")
+    public ResponseEntity<Void> discount(@PathVariable Long id, @RequestBody BigDecimal value) {
+        Order order = orderService.findById(id);
+        if (order != null) {
+            orderService.discount(order, value);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
 }

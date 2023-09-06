@@ -1,7 +1,6 @@
 package br.com.taroco.mustardmenu.domain.service;
 
 import br.com.taroco.mustardmenu.domain.model.order.Order;
-import br.com.taroco.mustardmenu.domain.model.order.OrderPayment;
 import br.com.taroco.mustardmenu.infrastructure.persistence.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,16 @@ public class OrderService {
 
     public void cancel(Order order) {
         order.cancel();
+        save(order);
+    }
+
+    public void addition(Order order, BigDecimal value) {
+        order.addition(value);
+        save(order);
+    }
+
+    public void discount(Order order, BigDecimal value) {
+        order.discount(value);
         save(order);
     }
 
